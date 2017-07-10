@@ -2473,6 +2473,15 @@ namespace Manager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ALR.
+        /// </summary>
+        public static string HeaderAverageLifetimePerRound {
+            get {
+                return ResourceManager.GetString("HeaderAverageLifetimePerRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AMT.
         /// </summary>
         public static string HeaderAverageMatchTime {

@@ -3580,6 +3580,11 @@ This is an ESEA issue, you may have missing data for this demo.</target>
           <source>Importing custom data...</source>
           <target state="new">Importing custom data...</target>
         </trans-unit>
+        <trans-unit id="HeaderAverageLifetimePerRound" translate="yes" xml:space="preserve">
+          <source>ALR</source>
+          <target state="new">ALR</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Average Lifetime Per Round</note>
+        </trans-unit>
       </group>
     </body>
   </file>

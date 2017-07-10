@@ -277,10 +277,15 @@ namespace Core.Models
 		/// </summary>
 		private Dictionary<int, int> _roundsMoneyEarned = new Dictionary<int, int>();
 
-		/// <summary>
-		/// Player's kills data
+        /// <summary>
+		/// Player lifetime for each round
 		/// </summary>
-		private ObservableCollection<KillEvent> _kills;
+		private Dictionary<int, float> _roundsLifetime = new Dictionary<int, float>();
+
+        /// <summary>
+        /// Player's kills data
+        /// </summary>
+        private ObservableCollection<KillEvent> _kills;
 
 		/// <summary>
 		/// Player's deaths data
@@ -628,7 +633,14 @@ namespace Core.Models
 			set { Set(() => RoundsMoneyEarned, ref _roundsMoneyEarned, value); }
 		}
 
-		[JsonProperty("entry_kills")]
+        [JsonProperty("rounds_lifetime")]
+        public Dictionary<int, float> RoundsLifetime
+        {
+            get { return _roundsLifetime; }
+            set { Set(() => RoundsLifetime, ref _roundsLifetime, value); }
+        }
+
+        [JsonProperty("entry_kills")]
 		public ObservableCollection<EntryKillEvent> EntryKills
 		{
 			get { return _entryKills; }
@@ -858,7 +870,29 @@ namespace Core.Models
 			}
 		}
 
-		[JsonIgnore]
+        /// <summary>
+		/// Average lifetime per round
+		/// </summary>
+		[JsonProperty("average_lifetime_per_round")]
+        public double AverageLifetimePerRound
+        {
+            get
+            {
+                double total = 0;
+                
+                if (Deaths.Any() && RoundsLifetime.Any())
+                {
+                    total = Deaths.ToList().Where(killEvent => killEvent != null && killEvent.KilledSteamId == SteamId)
+                        .Aggregate(total, (current, killEvent) => current + (RoundsLifetime[killEvent.RoundNumber]));
+                    if (Math.Abs(total) < 0.1) return total;
+                }
+                if (RoundPlayedCount > 0) total = Math.Round(total / RoundPlayedCount, 1);
+
+                return total;
+            }
+        }
+
+        [JsonIgnore]
 		public decimal HeadshotPercent
 		{
 			get
@@ -1040,7 +1074,8 @@ namespace Core.Models
 		private void OnDeathsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			DeathCount = Deaths.Count + SuicideCount;
-		}
+            RaisePropertyChanged(() => AverageLifetimePerRound);
+        }
 
 		private void OnKillsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
@@ -1141,6 +1176,7 @@ namespace Core.Models
 			Kills.Clear();
 			PlayersHurted.Clear();
 			RoundsMoneyEarned.Clear();
+            RoundsLifetime.Clear();
 			StartMoneyRounds.Clear();
 		}
 
@@ -1205,7 +1241,8 @@ namespace Core.Models
 				Deaths = new ObservableCollection<KillEvent>(),
 				EntryHoldKills = new ObservableCollection<EntryHoldKillEvent>(),
 				RoundsMoneyEarned = new Dictionary<int, int>(),
-				Clutches = new ObservableCollection<ClutchEvent>(),
+                RoundsLifetime = new Dictionary<int, float>(),
+                Clutches = new ObservableCollection<ClutchEvent>(),
 				EntryKills = new ObservableCollection<EntryKillEvent>(),
 				EquipementValueRounds = new Dictionary<int, int>(),
 				StartMoneyRounds = new Dictionary<int, int>(),
@@ -1231,8 +1268,10 @@ namespace Core.Models
 				player.RoundsMoneyEarned.Add(kvp.Key, kvp.Value);
 			foreach (KeyValuePair<int, int> kvp in StartMoneyRounds)
 				player.StartMoneyRounds.Add(kvp.Key, kvp.Value);
+            foreach (KeyValuePair<int, float> kvp in RoundsLifetime)
+                player.RoundsLifetime.Add(kvp.Key, kvp.Value);
 
-			return player;
+            return player;
 		}
 
 		/// <summary>
@@ -1262,7 +1301,10 @@ namespace Core.Models
 			PlayersHurted.Clear();
 			foreach (PlayerHurtedEvent e in player.PlayersHurted) PlayersHurted.Add(e);
 
-			RoundsMoneyEarned.Clear();
+            RoundsLifetime.Clear();
+            foreach (KeyValuePair<int, float> kvp in player.RoundsLifetime) RoundsLifetime.Add(kvp.Key, kvp.Value);
+
+            RoundsMoneyEarned.Clear();
 			foreach (KeyValuePair<int, int> kvp in player.RoundsMoneyEarned) RoundsMoneyEarned.Add(kvp.Key, kvp.Value);
 
 			StartMoneyRounds.Clear();

@@ -109,7 +109,8 @@ namespace Services.Concrete.Excel.Sheets.Single
 					SetCellValue(row, columnNumber++, CellType.Numeric, player.AverageHealthDamage);
 					SetCellValue(row, columnNumber++, CellType.Numeric, player.TotalDamageHealthCount);
 					SetCellValue(row, columnNumber++, CellType.Numeric, player.TotalDamageArmorCount);
-					SetCellValue(row, columnNumber++, CellType.Numeric, player.FiveKillCount);
+                    SetCellValue(row, columnNumber++, CellType.Numeric, player.AverageLifetimePerRound);
+                    SetCellValue(row, columnNumber++, CellType.Numeric, player.FiveKillCount);
 					SetCellValue(row, columnNumber++, CellType.Numeric, player.FourKillCount);
 					SetCellValue(row, columnNumber++, CellType.Numeric, player.ThreeKillCount);
 					SetCellValue(row, columnNumber++, CellType.Numeric, player.TwoKillCount);

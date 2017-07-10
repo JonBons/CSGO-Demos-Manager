@@ -957,6 +957,11 @@
 															Header="{x:Static properties:Resources.HeaderTotalDamagesArmor}"
 															Binding="{Binding TotalDamageArmorCount}"
 															Visibility="{Binding Source={StaticResource Locator}, Path=Settings.ShowTotalDamageArmorColumn, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <DataGridTextColumn HeaderStyle="{StaticResource AverageLifetimePerRoundHeader}"
+															Width="Auto"
+															Header="{x:Static properties:Resources.HeaderAverageLifetimePerRound}"
+															Binding="{Binding AverageLifetimePerRound, Converter={StaticResource DoubleToStringConverter}}"
+															Visibility="{Binding Source={StaticResource Locator}, Path=Settings.ShowAverageLifetimeColumn, Converter={StaticResource BooleanToVisibilityConverter}}" />
 										<DataGridTextColumn HeaderStyle="{StaticResource Clutch1v1Header}"
 															Width="Auto"
 															Header="{x:Static properties:Resources.OneVersusOne}"
@@ -1193,7 +1198,12 @@
 															Header="{x:Static properties:Resources.HeaderTotalDamagesArmor}"
 															Binding="{Binding TotalDamageArmorCount}"
 															Visibility="{Binding Source={StaticResource Locator}, Path=Settings.ShowTotalDamageArmorColumn, Converter={StaticResource BooleanToVisibilityConverter}}" />
-										<DataGridTextColumn HeaderStyle="{StaticResource Clutch1v1Header}"
+                                        <DataGridTextColumn HeaderStyle="{StaticResource AverageLifetimePerRoundHeader}"
+															Width="Auto"
+															Header="{x:Static properties:Resources.HeaderAverageLifetimePerRound}"
+															Binding="{Binding AverageLifetimePerRound, Converter={StaticResource DoubleToStringConverter}}"
+															Visibility="{Binding Source={StaticResource Locator}, Path=Settings.ShowAverageLifetimeColumn, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <DataGridTextColumn HeaderStyle="{StaticResource Clutch1v1Header}"
 															Width="Auto"
 															Header="{x:Static properties:Resources.OneVersusOne}"
 															Binding="{Binding Clutch1V1Count}"

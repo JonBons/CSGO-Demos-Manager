@@ -538,6 +538,10 @@
     <value>TDA</value>
     <comment>Total Damage Armor</comment>
   </data>
+  <data name="HeaderAverageLifetimePerRound" xml:space="preserve">
+    <value>ALR</value>
+    <comment>Average Lifetime Per Round</comment>
+  </data>
   <data name="HeaderTotalDamagesHealth" xml:space="preserve">
     <value>TDH</value>
     <comment>Total Damage Health</comment>

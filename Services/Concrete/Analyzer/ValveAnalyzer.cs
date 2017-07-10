@@ -220,7 +220,12 @@ namespace Services.Concrete.Analyzer
 				}
 			};
 
-			bool killerIsBot = e.Killer != null && e.Killer.SteamID == 0;
+            if (!killed.RoundsLifetime.ContainsKey(CurrentRound.Number))
+                killed.RoundsLifetime[CurrentRound.Number] = ((Parser.IngameTick - CurrentRound.Tick) / Parser.TickRate);
+            else
+                killed.RoundsLifetime[CurrentRound.Number] += ((Parser.IngameTick - CurrentRound.Tick) / Parser.TickRate);
+
+            bool killerIsBot = e.Killer != null && e.Killer.SteamID == 0;
 			bool victimIsBot = e.Victim.SteamID == 0;
 			bool assisterIsBot = e.Assister != null && e.Assister.SteamID == 0;
 

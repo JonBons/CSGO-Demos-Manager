@@ -386,7 +386,12 @@ namespace Services.Concrete.Analyzer
 				}
 			};
 
-			killed.IsAlive = false;
+            if (!killed.RoundsLifetime.ContainsKey(CurrentRound.Number))
+                killed.RoundsLifetime[CurrentRound.Number] = ((Parser.IngameTick - CurrentRound.Tick) / Parser.TickRate);
+            else
+                killed.RoundsLifetime[CurrentRound.Number] += ((Parser.IngameTick - CurrentRound.Tick) / Parser.TickRate);
+
+            killed.IsAlive = false;
 			if (e.Killer != null)
 			{
 				killer = Demo.Players.FirstOrDefault(player => player.SteamId == e.Killer.SteamID);

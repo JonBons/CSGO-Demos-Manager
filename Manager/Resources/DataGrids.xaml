@@ -220,7 +220,11 @@
 		<Setter Property="ToolTipService.ToolTip" Value="{x:Static properties:Resources.HeaderToolTipTotalDamageArmor}" />
 	</Style>
 
-	<Style TargetType="DataGridColumnHeader" x:Key="ClutchCountHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
+    <Style TargetType="DataGridColumnHeader" x:Key="AverageLifetimePerRoundHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
+        <Setter Property="ToolTipService.ToolTip" Value="{x:Static properties:Resources.HeaderAverageLifetimePerRound}" />
+    </Style>
+
+    <Style TargetType="DataGridColumnHeader" x:Key="ClutchCountHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
 		<Setter Property="ToolTipService.ToolTip" Value="{x:Static properties:Resources.HeaderToolTipClutchCount}" />
 	</Style>
 
